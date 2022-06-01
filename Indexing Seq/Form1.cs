@@ -22,12 +22,7 @@ namespace Indexing_Seq
             write(0);
         }
         SortedDictionary<int, int> d = new SortedDictionary<int, int>();
-        FileStream fs;
-        StreamReader sr;
-        StreamWriter sw;
-        FileStream fs1;
-        StreamReader sr1;
-        StreamWriter sw1;
+        FileStream fs;StreamReader sr;StreamWriter sw;FileStream fs1;StreamReader sr1;StreamWriter sw1;
         public void write(int x)//write test
         {
             d.Clear();
@@ -37,17 +32,12 @@ namespace Indexing_Seq
             int c = 0;
             while((l=sr.ReadLine())!=null)
             {
-                if (l[0] == '*')
-                {
-                    c += l.Length + 2; continue;
-                }
+                if (l[0] == '*'){c += l.Length + 2; continue;}
                 string[] arr = l.Split('|');
                 d.Add(int.Parse(arr[0]), c);
                 c += l.Length+2;
             }
-            sr.Close();
-            fs.Close();
-            write();
+            sr.Close();fs.Close();write();
         }
         public void write()//write index
         {
@@ -58,8 +48,7 @@ namespace Indexing_Seq
                 sw1.WriteLine(i.Key + "\t" + i.Value);
                 sw1.Flush();
             }
-            sw1.Close();
-            fs1.Close();
+            sw1.Close();fs1.Close();
         }
         private void button7_Click(object sender, EventArgs e)//INSERT
         {
@@ -72,31 +61,20 @@ namespace Indexing_Seq
                 int c = Convert.ToInt32(fs.Position);
                 d.Add(int.Parse(textBox2.Text), c);
                 sw.Write(textBox2.Text + "|" + textBox3.Text + "\r\n");
-                sw.Flush();
-                sw.Close();
-                fs.Close();
-                write();
+                sw.Flush();sw.Close();fs.Close();write();
             }
-            else
-            {
-                MessageBox.Show("Already Added!");
-            }
+            else MessageBox.Show("Already Added!");
         }
 
         private void button6_Click(object sender, EventArgs e)//LOADFILE
         {
             fs = new FileStream("test.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             sr=new StreamReader(fs);
-            string l;
-            string f = "";
+            string l,f = "";
             while((l=sr.ReadLine())!=null)
-            {
-                if (l[0]!='*')
-                    f += l + "\r\n";
-            }
+                    if (l[0]!='*')f += l + "\r\n";
             textBox1.Text = f;
-            sr.Close();
-            fs.Close();
+            sr.Close();fs.Close();
         }
 
         private void button5_Click(object sender, EventArgs e)//LOADINDEX
@@ -106,18 +84,13 @@ namespace Indexing_Seq
             sr1 = new StreamReader(fs1);
             string l,f="";
             while ((l=sr1.ReadLine())!=null)
-            {
-                if (l[0] == '*') continue;
-                f += l+ "\r\n";
-            }
+                if (l[0] != '*')f += l+ "\r\n";
             textBox1.Text = f;
-            sr1.Close();
-            fs1.Close();
+            sr1.Close();fs1.Close();
         }
         public bool bs(int[] arr,int n)
         {
-            int st = 0, en = arr.Length - 1;
-            int mid;
+            int st = 0, en = arr.Length - 1,mid;
             while(st<=en)
             {
                 mid = (st + en) / 2;
@@ -137,10 +110,7 @@ namespace Indexing_Seq
                 int m = d[h];
                 textBox1.Text = "ID = " + h.ToString()+" at Position = "+ m.ToString();
             }
-            else
-            {
-                MessageBox.Show("Not Found!");
-            }
+            else MessageBox.Show("Not Found!");
         }
         public void delind()
         {
@@ -162,8 +132,7 @@ namespace Indexing_Seq
         public void deltxt()
         {
             fs = new FileStream("test.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            sr = new StreamReader(fs);
-            sw = new StreamWriter(fs);
+            sr = new StreamReader(fs);sw = new StreamWriter(fs);
             string l;
             int c = 0;
             while ((l=sr.ReadLine())!=null)
@@ -182,8 +151,7 @@ namespace Indexing_Seq
         }
         private void button3_Click(object sender, EventArgs e)//Delete By ID
         {
-            delind();
-            deltxt();
+            delind();deltxt();
         }
 
         private void button1_Click(object sender, EventArgs e)//Close
